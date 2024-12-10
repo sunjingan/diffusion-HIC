@@ -1,4 +1,4 @@
-theme: minima # 选择一个主题，例如 minima
+theme: jekyll-theme-minimal # 选择一个主题，例如 minima
 title: Diffusion-HIC
 description: An end-to-end diffusion generative model for heavy-ion collisions
 author: Jing-An
