@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Diffusion-HIC | An end-to-end diffusion generative model for heavy-ion collisions</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Diffusion-HIC" />
+<meta name="author" content="Jing-An" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="An end-to-end diffusion generative model for heavy-ion collisions." />
+<meta property="og:description" content="An end-to-end diffusion generative model for heavy-ion collisions." />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
+<meta property="og:site_name" content="Diffusion-HIC" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Diffusion-HIC" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"Jing-An"},"description":"An end-to-end diffusion generative model for heavy-ion collisions.","headline":"Diffusion-HIC","name":"Diffusion-HIC","url":"http://localhost:4000/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=8faf1fbe3862c72481699c5bc5faa38b7fe09bd2">
+    <!-- Add MathJax scripts here -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+          extensions: ["tex2jax.js"],
+          tex2jax: {
+              inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+              processEscapes: true,
+              processRefs: true,
+              processEnvironments: true
+          },
+          TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script type="text/javascript" async
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Diffusion-HIC</h1>
+      <h2 class="project-tagline">An end-to-end diffusion generative model for heavy-ion collisions.</h2>
+      
+      <!-- Authors Section -->
+    <div class="project-authors">
+      <p><strong>Jing-An Sun</strong>,<sup>1, 2</sup> Li Yan,<sup>1, 3</sup> Charles Gale,<sup>2</sup> and Sangyong Jeon<sup>2</sup></p>
+      <p><sup>1</sup>Institute of Modern Physics, Fudan University, Handan Road 220, Yangpu District, Shanghai, 200433, China</p>
+      <p><sup>2</sup>Department of Physics, McGill University, Montreal, Quebec H3A 2T8, Canada</p>
+      <p><sup>3</sup>Key Laboratory of Nuclear Physics and Ion-beam Application (MOE), Fudan University, Shanghai 200433, China</p>
+    </div>
+
+      <!-- Add Abstract content -->
+      
+      <p class="project-abstract" style="margin-top: 20px; font-size: 1.2em; line-height: 1.6; text-align: center;">
+      Diffusion-HIC is an end-to-end diffusion generative model designed for ultra-relativistic heavy-ion collisions.  It leverages advanced diffusion model to simulate high-energy events with high precision and significant speed-up.
+
+      </p>
+      
+
+
+      <!-- Buttons Section -->
+      <div class="project-buttons">
+      <a href="https://huggingface.co/Jing-An/DiffHIC/tree/main" class="btn" target="_blank">Code and Model</a>
+      <a href="https://arxiv.org/pdf/2410.13069" class="btn" target="_blank">ArXiv</a>
+      </div>
+
+      
+        <a href="https://github.com/sunjingan/diffusion-HIC" class="btn">View on GitHub</a>
+      
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <h1 id="introduction">Introduction</h1>
+
+<p>The multistage approach based on hydrodynamics has achieved remarkably success in modeling heavy-ion physics, providing an accurate description of experimental particle spectra as well as various signatures of collective flow, flow correlations, and fluctuations. However, traditional numerical simulations of hydrodynamics are challenged by recent high-precision measurements: to probe the finer details in the system via statistics-demanding observables, $10^9-10^{10}$ collisions events are commonly required. <strong>As heavy-ion collision physics enters a high-precision era, theoretical modeling needs to evolve to meet growing computational demands.</strong></p>
+
+<p>In this work, we introduce DiffHIC, a generative diffusion model designed to bridge this gap. <strong>The model simulates ultra-relativistic heavy-ion collisions from end to end, taking initial entropy density profiles as input and producding two-dimensional final particle spectra.</strong> By comparing observables derived from particle spectra generated by both traditional numerical simulations and our trained generative model, we demonstrate that DiffHIC not only accurately replicates integrated and differential observables but also effectively captures higher-order fluctuations and correlations. These results indicate that <strong>DiffHIC successfully learns the intricate mapping from initial entropy density profiles to final particle spectra, governed by a set of nonlinear hydrodynamic and Boltzmann transport equations</strong>. While preserving the fine details of the underlying physical processes, DiffHIC significantly accelerates end-to-end heavy-ion collision simulations. For example, <strong>DiffHIC can simulate a single central collision event in just 0.1 seconds on a GeForce GTX 4090 GPU.($10^5$ times speed-up)</strong></p>
+
+<h1 id="the-hybrid-model-for-heavy-ion-collisions">The hybrid model for heavy-ion collisions</h1>
+<p><img src="/assets/imgs/hic.png" alt="Hybrid model" /></p>
+
+\[\begin{align}
+\partial_\mu T^{\mu\nu} &amp;= 0\\
+P &amp;= P(e)
+\end{align}\]
+
+<h2 id="data-preparations">Data preparations</h2>
+<p><img src="/assets/imgs/data.png" alt="Data preparations" /></p>
+
+<h1 id="the-diffusion-generative-model-for-heavy-ion-collisions">The diffusion generative model for heavy-ion collisions</h1>
+<p>Our task is to generate the final particle spectra conditioned by the initial entropy density profile  and the shear viscosity, a process is governed by hydrodynamic evolution and Boltzmann transport. We model it as a conditional distributions,</p>
+
+\[p(\text{Particle Spectra} | \text{Initial entropy production}, \text{Physical parameters}).\]
+
+<p>The diffusion model is born for learn unknown distributions, especially for high-dimensional data. In the forward process, the original data distribution is transformed into a known prior, by gradually injecting noise. Such a process is governed by a stochastic differential equation (SDE). A corresponding reverse-time SDE transforms the prior distribution back into the data dis-
+tribution by gradually removing the noise.</p>
+
+<p><img src="/assets/imgs/demoDiff.png" alt="demo Diffusion" /></p>
+
+<p>Here is our trainging pipeline. The initial density profiles and corresponding particle spectra are concatenated channel-wise. The diffusion time steps $t$ and $\eta/s$ are encoded via a time-embedding and label-embedding layer, respectively, which are further added together. The input charged particle spectra are noised according to $\pmb{S}_t = \sqrt{\alpha_t} \pmb{S}_0 + \sqrt{1-\alpha_t} \pmb{\varepsilon}$.</p>
+
+<p>A noise-prediction network $\pmb{\varepsilon}_{\pmb\theta}(\pmb{S}_t, \pmb{I}, \eta/s, t)$ are used, aiming to minimize the mean squared error</p>
+
+\[\|\boldsymbol{\varepsilon} - \boldsymbol{\varepsilon}_{\pmb\theta}\|^2.\]
+
+<p>Once we have a such trained scaled score function
+$\pmb \varepsilon_{\pmb \theta} = -\sigma_t \pmb s_{\pmb \theta}$, the particle spectra can be generated from Gaussian noise by solving the reverse ODE. The DPM-Slover is used for sampling in this work.</p>
+
+<p><img src="/assets/imgs/workflow.png" alt="Workflow" /></p>
+<h1 id="examples">Examples</h1>
+<p>The first row are the ground truth particle spectra and the second row are generated ones. We also label the collisons centralities in the figure.</p>
+
+<p><img src="/assets/imgs/example.png" alt="examples" /></p>
+
+<p>At eyes level, the generated model can reproduce the ground truth particle spectra accruately. However, for the scientific applications, the pixel level precision should be pursued. Thus, we need to evaluate the model in a physical way.</p>
+
+<h1 id="evaluations">Evaluations</h1>
+
+\[{\pmb S}\equiv \frac{dN}{{d^2 {\pmb p}_T}} \sim \sum_{n=0} v_n(p_T) e^{i n (\phi_p-\Psi_n)}\]
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/sunjingan/diffusion-HIC">diffusion-HIC</a> is maintained by <a href="https://github.com/sunjingan">sunjingan</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html>

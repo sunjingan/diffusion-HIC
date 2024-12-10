@@ -4,3 +4,6 @@ plugins:
 title: Diffusion-HIC
 description: An end-to-end diffusion generative model for heavy-ion collisions
 author: Jing-An
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
