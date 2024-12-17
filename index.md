@@ -16,13 +16,11 @@ In this work, we introduce DiffHIC, a generative diffusion model designed to bri
 
 # The hybrid model for heavy-ion collisions
 ![Hybrid model](./assets/imgs/hic.png)
+At the initial time $\tau_0$, the entropy production is calculated with the [TrENTo](https://github.com/Duke-QCD/trento3d-1.0/) model, where fluctuations in the positions of the nucleons and the contributed entropy in each nucleon-nucleon collision have been taken into account. The system subsequently undergoes hydrodynamic evolution which is realized by [MUSIC](https://github.com/MUSIC-fluid/MUSIC/) with a lattice QCD equation of state. When the local energy density drops to a switching
+value $\epsilon_{sw} = 0.18$ GeV/fm$^3$, the transition from fluid to particles occurs through the Cooper-Frye formula. The particles with well-defined positions and momenta are randomly sampled from each fluid cell individually by
+using the publicly available [iSS](https://github.com/chunshen1987/iSS) sampler. After particlization, [UrQMD](https://github.com/jbernhard/urqmd-afterburner) simulates the Boltzmann transport of all hadrons in the system and considers the rescatterings
+among hadrons and their excited resonance states, as well as all strong decay processes.
 
-$$
-\begin{align}
-\partial_\mu T^{\mu\nu} &= 0\\
-P &= P(e)
-\end{align}
-$$
 
 ## Data preparations
 ![Data preparations](./assets/imgs/data.png)
@@ -57,8 +55,32 @@ The first row are the ground truth particle spectra and the second row are gener
 At eyes level, the generated model can reproduce the ground truth particle spectra accruately. However, for the scientific applications, the pixel level precision should be pursued. Thus, we need to evaluate the model in a physical way.
 
 # Evaluations
+The anisotropic flow is the primary observable in heavy-ion physics, as it quantitatively characterize the spectrum. It is defined as the Fourier coefficients of the particle spectrum,
 {% raw %}
 $$
-{\pmb S}\equiv \frac{dN}{{d^2 {\pmb p}_T}} \sim \sum_{n=0} v_n(p_T) e^{i n (\phi_p-\Psi_n)} 
+{\pmb S}\equiv \frac{dN}{{d^2 {\pmb p}_T}} \sim \sum_{n=0} v_n(p_T) e^{i n (\phi_p-\Psi_n)} ,
 $$
 {% endraw %}
+where $\Psi_n$ is the event plane.
+
+![vn_cen](./assets/imgs/vn_cen.png)
+The centrality dependence of integrated anisotropy flow. The filled symbols are the ground truth. The first column is the ideal hydrodynamic results. The second and
+third columns present the results with $\eta/s = 0.1, \eta/s = 0.2$, respectively.
+
+
+
+![vn_pT](./assets/imgs/vn_pT.png)
+The $p_T$ dependence of anisotropy flow, across all centralities. The filled symbols are the ground truth. The first row is the ideal hydrodynamic results. The second and third rows present the results with $\eta/s = 0.1, \eta/s = 0.2$, respectively. In each plot, the red, blue, and green lines represent $v_2(p_T )$, $v_3(p_T )$, and $v_4(p_T )$, respectively
+
+ 
+![ratio](./assets/imgs/ratio.png)
+The ratio between the generated results and ground truth in central events. The gray band is $1\pm 0.05$. From left to right, the different color regions correspond to flow from single-, 2-, 3-, 4-, 6-, and 8-particle correlations, respectively. Errors are estimated via the bootstrap method.
+
+# Conlusions and Limitaions
+
+* The state-of-art diffusion generative model is for the first time trained to generate the final particle spectra, from event-by-event initial entropy density profiles. 
+* While being capable of capturing the two-dimensional distribution in the momentum space accurately, DiffHIC speeds up the numerical simulations by a factor of roughly $10^5$, compared to the traditional approach. 
+* The DifHIC model aims to be applicable to high-precision experimental measurements, establishing a solid theoretical foundation for interpreting observables based on a huge amount of collision data, particularly in relation to the fine structures present in the systems. 
+
+Although the model precision decreases systematically as the number of correlated particles increases, it is to some extent anticipated since **our simulations are limited by the spectrum resolution of 64×64**. **A higher-resolution model would capture more details of the heavy-ion dynamics**. Similar issues also exist in the high-$p_T$ region and peripheral collisions, where effective pixels of the spectrum reduce significantly.
+
